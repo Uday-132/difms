@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🛒 Product Marketplace</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="text-right mb-lg">
+            <a class="btn btn-secondary" 
+                href="https://script.google.com/macros/s/AKfycbwC8Jhhq16AceI-5HkseS7M-TpvX1f61fL52RGzw_b_DtqnfJukmEb7Ry0oLOOl6Nvj/exec">
+                ➕ Add Your Product
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1" id="productList">
+            <!-- Product cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        function renderProducts(products) {
+            const container = document.getElementById("productList");
+            container.innerHTML = "";
+            products.forEach(p => {
+                let card = `
+          <div class="card">
+            <img src="${p.image || 'https://via.placeholder.com/250'}" alt="${p.name}" style="width: 100%; height: 180px; object-fit: cover; border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+            <h3>${p.name}</h3>
+            <p>${p.description}</p>
+            <p style="font-weight: bold; color: var(--success-color); margin: var(--spacing-sm) 0;">₹ ${p.price}</p>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin: var(--spacing-xs) 0;">Seller: ${p.seller}</p>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin: var(--spacing-xs) 0;">📍 ${p.location}</p>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin: var(--spacing-xs) 0;">📞 ${p.contact}</p>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin: var(--spacing-xs) 0;">✉️ ${p.email}</p>
+            <div class="text-center mt-md">
+              <button class="btn btn-secondary" onclick="buyProduct('${p.name}', '${p.price}', '${p.seller}', '${p.image || 'https://via.placeholder.com/250'}')">Buy Now</button>
+            </div>
+          </div>
+        `;
+                container.innerHTML += card;
+            });
+        }
+
+        google.script.run.withSuccessHandler(renderProducts).getProducts();
+        
+        // Function to handle buying a product
+        function buyProduct(name, price, seller, image) {
+            // Encode product details for URL
+            const encodedName = encodeURIComponent(name);
+            const encodedSeller = encodeURIComponent(seller);
+            const encodedImage = encodeURIComponent(image);
+            
+            // Navigate to buy now page with product details
+            window.location.href = `buy_now.html?name=${encodedName}&price=${price}&seller=${encodedSeller}&image=${encodedImage}`;
+        }
+    </script>
+</body>
+
+</html>

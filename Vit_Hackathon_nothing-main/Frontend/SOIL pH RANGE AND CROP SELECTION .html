@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="te">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil pH Information</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body style="font-family: var(--font-primary); text-align: center; margin: var(--spacing-lg);">
+
+    <header class="header">
+        <div class="container">
+            <h1>మట్టి pH సమాచారం</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="table-container">
+            <table id="soilTable">
+                <!-- Data will be inserted here dynamically -->
+            </table>
+        </div>
+
+        <div class="form-container mt-xl">
+            <h2>మీ మట్టి pH విలువను నమోదు చేయండి</h2>
+            <form onsubmit="submitPH(event)">
+                <div class="form-group">
+                    <label class="form-label" for="token">టోకెన్ నంబర్:</label>
+                    <input type="text" id="token" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="phValue">pH విలువ:</label>
+                    <input type="number" id="phValue" class="form-input" step="0.1" required>
+                </div>
+                
+                <button type="submit" class="btn">సమీటు చేయండి</button>
+            </form>
+        </div>
+
+        <p id="suggestion" style="font-weight: bold; margin-top: var(--spacing-lg); color: var(--warning-color);"></p>
+    </div>
+
+    <script>
+        function loadSoilPHData() {
+            google.script.run.withSuccessHandler(displayData).getSoilPHData();
+        }
+
+        function displayData(data) {
+            let table = document.getElementById("soilTable");
+            let content = "";
+
+            data.forEach((row, index) => {
+                content += "<tr>";
+                row.forEach(cell => {
+                    content += index === 0 ? `<th>${cell}</th>` : `<td>${cell}</td>`;
+                });
+                content += "</tr>";
+            });
+
+            table.innerHTML = content;
+        }
+
+        function submitPH(event) {
+            event.preventDefault(); // Prevent form submission
+
+            let token = document.getElementById("token").value;
+            let phValue = parseFloat(document.getElementById("phValue").value);
+
+            if (!token || isNaN(phValue)) {
+                alert("దయచేసి సరైన టోకెన్ నంబర్ మరియు pH విలువను నమోదు చేయండి.");
+                return;
+            }
+
+            google.script.run.withSuccessHandler(function (suggestion) {
+                document.getElementById("suggestion").innerText = "సలహా: " + suggestion;
+
+                // Save details to Google Sheets
+                google.script.run.withSuccessHandler(function (message) {
+                    alert(message);
+                }).savePHData(token, phValue, suggestion);
+
+            }).getSuggestion(phValue);
+        }
+
+        window.onload = loadSoilPHData;
+    </script>
+
+</body>
+
+</html>

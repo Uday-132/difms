@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>NASA Real Time Data and Ground Data Observations</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body style="display: flex; flex-direction: column; align-items: center; background: url('https://d2pn8kiwq2w21t.cloudfront.net/images/PIA26285.width-1320.jpg') no-repeat center center fixed; background-size: cover; color: var(--white); text-shadow: 2px 2px 5px black; height: 100vh; padding: var(--spacing-xl) 0;">
+    <header class="header" style="background: transparent; box-shadow: none; width: 100%;">
+        <div class="container">
+            <h1 class="text-center">NASA Real Time Data and Ground Data Observations</h1>
+        </div>
+    </header>
+
+    <div style="margin: var(--spacing-xl) 0; display: flex; gap: var(--spacing-xl); flex-wrap: wrap; justify-content: center;">
+        <button class="btn btn-accent"
+            onclick="openSheet('https://docs.google.com/spreadsheets/d/13XqyHmvt9K-5iIZ-o3OyQ3qbVGthb4rYDTmcVHNG9wQ/edit?gid=0#gid=0')" 
+            style="padding: var(--spacing-lg) var(--spacing-xl); font-size: var(--font-size-lg); border-radius: var(--border-radius-lg); box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);">
+            2024-2025 (Mirchi)
+        </button>
+        <button class="btn btn-accent"
+            onclick="openSheet('https://docs.google.com/spreadsheets/d/13XqyHmvt9K-5iIZ-o3OyQ3qbVGthb4rYDTmcVHNG9wQ/edit?gid=1041973455')" 
+            style="padding: var(--spacing-lg) var(--spacing-xl); font-size: var(--font-size-lg); border-radius: var(--border-radius-lg); box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);">
+            2025-2026 (Cotton)
+        </button>
+    </div>
+
+    <script>
+        function openSheet(url) {
+            window.open(url, '_self');
+        }
+    </script>
+</body>
+
+</html>

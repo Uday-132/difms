@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DIGITAL INDIA FARMING AND MONITORING SYSTEM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>DIGITAL INDIA FARMING AND MONITORING SYSTEM</h1>
+        </div>
+    </header>
+
+    <div style="background-color: var(--white); padding: var(--spacing-md); text-align: center;">
+        <marquee behavior="scroll" direction="left" scrollamount="5">
+            *** <a href="#" style="color: var(--error-color); text-decoration: none; font-weight: bold;">*** భారతదేశ సన్నకారు రైతుల అభివృద్ధి మరియు ప్రోత్సహం కొరకు -- భారతదేశ ఆర్ధిక వ్యవస్థ
+                అభిరుద్ది కొరకు -- దళారి వ్యవస్థ నిర్ములనకు -- పంటకు తగిన గిట్టుబాటు ధర లభించేందుకు -- ఆధునిక సాంకేతికను
+                రైతులకు అందించేందుకు -- అర్హత కలిగిన రైతులకు నేరుగ ప్రభుత్వ పధకములు లభించేందుకు ***</a> ***
+        </marquee>
+    </div>
+
+    <div style="position: relative; width: 100%; height: 80vh; overflow: hidden;">
+        <img src="https://www.indiaspend.com/wp-content/uploads/7272267428_6c02c3aa76_z.jpg" alt="Indian Agriculture" style="width: 100%; height: 100%; object-fit: cover;">
+        
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 1000px;">
+            <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-xl); justify-content: space-between;">
+                <div class="form-container" style="flex: 1; min-width: 300px;">
+                    <h2 class="text-center">Farmer Registration</h2>
+                    <button class="btn btn-secondary"
+                        onclick="window.open('https://script.google.com/macros/s/AKfycbxqZcPt_InLIKXwq7l7AXElmBdFLbqrcr1l4V4ub5Hq/dev', '_self')">Register</button>
+                    <h2 class="text-center mt-lg">Farmer Login</h2>
+                    <div class="form-group">
+                        <input type="text" id="fliTokenNumber" class="form-input" placeholder="Enter FLI TOKEN NUMBER">
+                    </div>
+                    <button class="btn"
+                        onclick="window.open('https://script.google.com/macros/s/AKfycbzPIhPqazXbS2I06xY0kANJxJlBPqT9cw4V-7hX0mvJ1r8lGauN2dRKfLBW9xsNJz9n_Q/exec', '_self')">Login</button>
+                </div>
+
+                <div class="form-container" style="flex: 1; min-width: 300px;">
+                    <h2 class="text-center">Buyer Registration</h2>
+                    <button class="btn btn-secondary"
+                        onclick="window.open('https://script.google.com/macros/s/AKfycbxJlR8UkwwFtKkja8dtM3c2G397qrMRBBUuLjISKv8/dev', '_self')">Register</button>
+                    <h2 class="text-center mt-lg">Buyer Login</h2>
+                    <div class="form-group">
+                        <input type="text" id="binNumber" class="form-input" placeholder="Enter BIN NUMBER">
+                    </div>
+                    <button class="btn"
+                        onclick="window.open('https://script.google.com/macros/s/AKfycbz45ocLQvJq0DLK1GulTFuvutdG4GN4JnMKh1Ji3P1FAU6athqrwrRCDhZ65TAbxanH/exec', '_self')">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Farmer Details Table (Initially Hidden) -->
+    <div id="farmerDetails" style="display: none; margin-top: var(--spacing-xl); text-align: center;">
+        <div class="container">
+            <h2>Farmer Details</h2>
+            <div class="table-container">
+                <table id="detailsTable"></table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

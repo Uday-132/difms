@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DIGITAL INDIA FARMING AND MONITORING SYSTEM</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            let form = document.getElementById('farmerForm');
+            let formData = Object.fromEntries(new FormData(form).entries());
+
+            google.script.run.withSuccessHandler(response => {
+                alert(response);
+                form.reset();
+            }).saveData(formData);
+        }
+    </script>
+    <style>
+        @keyframes moveRightLeft {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+
+<body style="background-image: url('https://media.istockphoto.com/id/1280293781/vector/agricultural-workers-planting-paddy-seedlings-in-the-field-with-a-tractor-in-the-background.jpg?s=612x612&w=0&k=20&c=qpcHwcAj88_Zb6-C_DAkrpQAZ-x0IetzlHWtq8-bBeQ='); background-size: cover; text-align: center; margin: 0; padding-top: 100px;">
+
+    <header class="header" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+        <div class="container">
+            <h1>DIGITAL INDIA FARMING AND MONITORING SYSTEM</h1>
+        </div>
+    </header>
+
+    <div style="font-family: var(--font-primary); color: var(--error-color); display: inline-block; padding: var(--spacing-md); font-size: var(--font-size-xl); position: absolute; top: 120px; width: auto; text-align: center; white-space: nowrap; overflow: hidden; animation: moveRightLeft 10s linear infinite;">
+        <a href="#" style="color: var(--error-color); text-decoration: none;">రైతు మరియు వ్యవసాయ భూమి గుర్తింపు సంఖ్య రూపొందించుట కొరకు ఖచ్చితమైన భూమి సర్వే నెంబర్ మరియు రైతుల యొక్క వివరములు సేకరణ</a>
+    </div>
+
+    <div class="container">
+        <div class="form-container" style="margin-top: 150px;">
+            <form id="farmerForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label class="form-label">Farmer Name:</label>
+                    <input type="text" name="farmerName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Aadhar Number:</label>
+                    <input type="text" name="aadharNumber" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Land Survey Number:</label>
+                    <input type="text" name="landSurveyNumber" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Village Name:</label>
+                    <input type="text" name="villageName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">District:</label>
+                    <input type="text" name="district" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">State:</label>
+                    <input type="text" name="state" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Bank Account Number:</label>
+                    <input type="text" name="bankAccount" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Bank Branch:</label>
+                    <input type="text" name="bankBranch" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email ID:</label>
+                    <input type="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number:</label>
+                    <input type="text" name="phone" class="form-input" required>
+                </div>
+                
+                <div class="text-center">
+                    <input type="submit" class="btn" value="Register">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Digital India Farming and Monitoring System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>DIGITAL INDIA FARMING AND MONITORING SYSTEM</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="text-center">FARMER PAGE</h2>
+
+        <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-lg); margin-top: var(--spacing-lg);">
+            <!-- Left menu -->
+            <div style="flex: 1; min-width: 250px;">
+                <div class="nav-menu">
+                    <a href="https://script.google.com/macros/s/AKfycbwIRH9K1NJ6rJ8KQThs3EiyBbcOkr4NWxuof3hX42yTSw857RxvdN3grQzKuQUqDJCF/exec" class="nav-link">Farmer Details</a>
+                    <a href="https://script.google.com/macros/s/AKfycbyCaimQgZCwN7NiG5c_fWw1HkDuYhLd2UJmXqHGKd6Y_Ueh1JU2wDV_yL_suhrbmKch/exec" class="nav-link">Ground Level Data</a>
+                    <a href="https://script.google.com/macros/s/AKfycbzsOmZ8jJy9z8xbr6376rlxc-_F53eYREt5nUS6vnBVyuEWRU0YQyoaHM93y6SOjqqo/exec" class="nav-link">Realtime Satellite Data</a>
+                    <a href="https://script.google.com/macros/s/AKfycbz45ocLQvJq0DLK1GulTFuvutdG4GN4JnMKh1Ji3P1FAU6athqrwrRCDhZ65TAbxanH/exec" class="nav-link">Digital Market</a>
+                    <a href="https://script.google.com/macros/s/AKfycbxg40MLZuyjgrCyJuvNPfXkhoINsCKicymO6EWTRNciiKSDcbDIyTmM9KWEKSWVerDe/exec" class="nav-link">NASA Real Time Data and Ground Data Observations</a>
+                </div>
+            </div>
+
+            <!-- Right table & chart -->
+            <div style="flex: 2; min-width: 300px;">
+                <div class="card">
+                    <h3>Field Comparison & Suggestions</h3>
+                    <div class="table-container">
+                        <table id="data-table"></table>
+                    </div>
+                    <div id="chart_div" style="height: 300px; margin-top: var(--spacing-lg);"></div>
+                    <div id="suggestion-box" style="margin-top: var(--spacing-lg);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Safely obtain payload. Some deployments inject server-side JSON directly into the page
+        // (for example by assigning to window.SERVER_PAYLOAD). The original code used a
+        // server-templating token (<?= payload ?>) which causes a JS syntax error when the
+        // file is opened locally or when the templating is not run. To avoid that, we first
+        // check for a server-provided object and otherwise use a harmless fallback.
+        let payload;
+        if (window.SERVER_PAYLOAD && typeof window.SERVER_PAYLOAD === 'object') {
+            payload = window.SERVER_PAYLOAD;
+        } else {
+            // Fallback sample payload so the page doesn't crash when no server injection is present.
+            payload = {
+                headers: ['Parameter', 'pH', 'Temperature', 'Soil Moisture'],
+                satellite: ['7.1', '26', '40'],
+                ground: ['6.8', '24', '28', '', '', '', 'good']
+            };
+            console.warn('No server payload found — using fallback sample data. To provide real data, set window.SERVER_PAYLOAD = <your JSON object> before this script runs.');
+        }
+
+        const headers = payload.headers;
+        const sat = payload.satellite;
+        const grd = payload.ground;
+
+        // Build table
+        let table = "<tr>";
+        headers.forEach(h => table += `<th>${h}</th>`);
+        table += "</tr>";
+        table += "<tr><td>Satellite data</td>" + sat.map(v => `<td>${v}</td>`).join("") + "</tr>";
+        table += "<tr><td>Ground level data</td>" + grd.map(v => `<td>${v}</td>`).join("") + "</tr>";
+        document.getElementById("data-table").innerHTML = table;
+
+        // Draw chart
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            const data = new google.visualization.DataTable();
+            data.addColumn('string', 'Parameter');
+            data.addColumn('number', 'Satellite');
+            data.addColumn('number', 'Ground');
+            data.addRows([
+                [headers[1], parseFloat(sat[1]) || 0, parseFloat(grd[1]) || 0],
+                [headers[2], parseFloat(sat[2]) || 0, parseFloat(grd[2]) || 0],
+                [headers[3], parseFloat(sat[3]) || 0, parseFloat(grd[3]) || 0]
+            ]);
+            const options = {
+                curveType: 'function',
+                legend: { position: 'right' },
+                backgroundColor: { fill: 'transparent' },
+                chartArea: { left: 50, top: 30, width: '80%', height: '70%' }
+            };
+            const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+        // Suggestions
+        let sugg = "";
+        if (parseFloat(grd[3]) < 30) sugg += "<div class='alert alert-warning'>⚠ Soil moisture is low. Irrigation needed.</div>";
+        else sugg += "<div class='alert alert-success'>✅ Soil moisture looks good.</div>";
+        if (parseFloat(grd[2]) < 5) sugg += "<div class='alert alert-warning'>⚠ Low temperature — protect sensitive crops.</div>";
+        if (grd[6] && grd[6].toString().toLowerCase() !== "good") sugg += "<div class='alert alert-error'>⚠ Crop health issue — inspect fields.</div>";
+        document.getElementById("suggestion-box").innerHTML = sugg;
+    </script>
+</body>
+
+</html>

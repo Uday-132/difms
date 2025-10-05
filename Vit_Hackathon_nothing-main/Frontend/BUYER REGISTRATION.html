@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DIGITAL INDIA FARMING AND MONITORING SYSTEM</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            let form = document.getElementById('buyerForm');
+            let formData = Object.fromEntries(new FormData(form).entries());
+
+            google.script.run.withSuccessHandler(response => {
+                alert(response);
+                form.reset();
+            }).saveData(formData);
+        }
+    </script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>DIGITAL INDIA FARMING AND MONITORING SYSTEM</h1>
+        </div>
+    </header>
+
+    <div style="background-color: var(--white); padding: var(--spacing-md); text-align: center; overflow: hidden;">
+        <div style="display: inline-block; padding: var(--spacing-md); font-size: var(--font-size-xl); position: relative; width: auto; text-align: center; white-space: nowrap; animation: moveRightLeft 20s linear infinite;">
+            <a href="#" style="color: var(--text-primary); text-decoration: none;">*** కొనుగోలు దారుని వివరములు రైతులు మరియు ప్రభుత్వము వారు తెలుసుకొనుటకు ***</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="text-center" style="color: var(--secondary-color); font-weight: bold; margin-top: var(--spacing-lg);">BUYER REGISTRATION FORM</h2>
+
+        <div class="form-container">
+            <form id="buyerForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label class="form-label">Buyer Name:</label>
+                    <input type="text" name="buyerName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Aadhar Number:</label>
+                    <input type="text" name="aadharNumber" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">PAN Number:</label>
+                    <input type="text" name="panNumber" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Village Name:</label>
+                    <input type="text" name="villageName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">District:</label>
+                    <input type="text" name="district" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">State:</label>
+                    <input type="text" name="state" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email ID:</label>
+                    <input type="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number:</label>
+                    <input type="text" name="phone" class="form-input" required>
+                </div>
+                
+                <div class="text-center">
+                    <input type="submit" class="btn" value="Register">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        @keyframes moveRightLeft {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</body>
+
+</html>
